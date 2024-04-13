@@ -1,7 +1,7 @@
 data "aws_ami" "ami" {
   most_recent = true
   name_regex  = "RHEL-9-DevOps-Practice"
-  owners      = ["9737144688"]
+  owners      = ["851725537390"]
 }
 
 data "aws_security_group" "selected" {
