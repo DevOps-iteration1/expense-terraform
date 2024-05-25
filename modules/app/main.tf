@@ -14,10 +14,10 @@ resource "null_resource" "ansible" {
   provisioner "remote-exec" {
 
     connection {
-      type = "ssh"
-      user = var.ssh_user
-      password = var.ssh_pass
-      host = aws_instance.instance.public_ip
+      type     = "ssh"
+      user     = jsondecode(data.vault_generic_secret.ssh.data_json).user
+      password = jsondecode(data.vault_generic_secret.ssh.data_json).password
+      host     = aws_instance.instance.public_ip
     }
     inline = [
       "sudo pip3.11 install ansible",
