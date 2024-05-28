@@ -6,14 +6,14 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "main" {
-  vpc_id          = aws_vpc.main.id
-  cidr_block      = var.subnet_cidr_block
-
-  tags = {
-    Name = "${var.env}-subnet"
-  }
-}
+#resource "aws_subnet" "main" {
+#  vpc_id          = aws_vpc.main.id
+# cidr_block      = var.subnet_cidr_block
+#
+ # tags = {
+ ##   Name = "${var.env}-subnet"
+#  }
+#}
 
 resource "aws_vpc_peering_connection" "main" {
   peer_vpc_id     = var.default_vpc_id
@@ -37,12 +37,13 @@ resource "aws_route" "default-vpc" {
   destination_cidr_block    = var.vpc_cidr_block
 }
 
-
-resource "aws_vpc" "main" {
-  cidr_block = var.vpc_cidr_block
+resource "aws_subnet" "frontend" {
+  count      = length(var.frontend_subnets)
+  vpc_id     = aws_vpc.main.id
+  cidr_block = var.frontend_subnets[count.index]
 
   tags = {
-    Name = "${var.env}-vpc"
+    Name = "${var.env}-frontend-subnet-${count.index}"
   }
 }
 
