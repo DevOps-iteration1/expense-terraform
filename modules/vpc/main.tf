@@ -50,7 +50,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name= "${var-env}-public-rt-${count.index+1}"
+    Name= "${var.env}-public-rt-${count.index+1}"
   }
 }
 
@@ -70,7 +70,7 @@ resource "aws_nat_gateway" "ngw" {
   subnet_id     = aws_subnet.public[count.index].id
 
   tags = {
-    Name = "${var-env}-ngw-${count.index+1}"
+    Name = "${var.env}-ngw-${count.index+1}"
   }
 }
 
@@ -100,7 +100,7 @@ resource "aws_route_table" "frontend" {
   }
 
   tags = {
-    Name= "${var-env}-frontend-rt-${count.index+1}"
+    Name= "${var.env}-frontend-rt-${count.index+1}"
   }
 }
 
@@ -135,7 +135,7 @@ resource "aws_route_table" "backend" {
   }
 
   tags = {
-    Name= "${var-env}-backend-rt-${count.index+1}"
+    Name= "${var.env}-backend-rt-${count.index+1}"
   }
 }
 
@@ -185,7 +185,7 @@ resource "aws_route_table" "db" {
   }
 
   tags = {
-    Name= "${var-env}-db-rt-${count.index+1}"
+    Name= "${var.env}-db-rt-${count.index+1}"
   }
 }
 
