@@ -1,4 +1,4 @@
-/*module "frontend" {
+module "frontend" {
   depends_on = [module.backend]
 
   source        = "./modules/app"
@@ -22,7 +22,7 @@ module "backend" {
   vault_token   = var.vault_token
   subnets       = module.vpc.backend_subnets
   vpc_id        = module.vpc.vpc_id
-}*/
+}
 
 module "mysql" {
   source        = "./modules/app"
