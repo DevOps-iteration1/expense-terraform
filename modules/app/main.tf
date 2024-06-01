@@ -1,28 +1,47 @@
+#resource "aws_security_group" "main" {
+#
+#}
+
 resource "aws_instance" "instance" {
-  ami           = data.aws_ami.ami.image_id
-  instance_type = var.instance_type
+  ami                    = data.aws_ami.ami.image_id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [data.aws_security_group.selected.id]
+  subnet_id              = var.subnets[0]
 
   tags = {
     Name    = var.component
     monitor = "yes"
     env     = var.env
   }
+
+  lifecycle {
+    ignore_changes = [
+      ami
+    ]
+  }
 }
 
 resource "null_resource" "ansible" {
+  connection {
+    type     = "ssh"
+    user     = jsondecode(data.vault_generic_secret.ssh.data_json).ansible_user
+    password = jsondecode(data.vault_generic_secret.ssh.data_json).ansible_password
+    host     = aws_instance.instance.public_ip
+  }
   provisioner "remote-exec" {
 
-    connection {
-      type     = "ssh"
-      user     = jsondecode(data.vault_generic_secret.ssh.data_json).ansible_user
-      password = jsondecode(data.vault_generic_secret.ssh.data_json).ansible_password
-      host     = aws_instance.instance.public_ip
-    }
     inline = [
+      "rm -f ~/secrets.json ~/app.json",
       "sudo pip3.11 install ansible hvac",
       "ansible-pull -i localhost, -U https://github.com/DevOps-iteration1/expense-ansible get-secrets.yml -e env=${var.env} -e role_name=${var.component} -e vault_token=${var.vault_token}",
       "ansible-pull -i localhost, -U https://github.com/DevOps-iteration1/expense-ansible expense.yml -e env=${var.env} -e role_name=${var.component} -e @secrets.json -e @app.json",
+      "rm -f ~/secrets.json ~/app.json"
+    ]
+  }
+
+  provisioner "remote-exec" {
+
+    inline = [
       "rm -f ~/secrets.json ~/app.json"
     ]
   }

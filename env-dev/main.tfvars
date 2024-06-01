@@ -4,9 +4,9 @@ zone_id                = "Z05074211Z8DDXOAYD216"
 
 #VPC
 vpc_cidr_block         = "10.10.0.0/24"
-default_vpc_id         = ""
-default_vpc_cidr       = ""
-default_route_table_id = ""
+default_vpc_id         = "vpc-081a0d922352250d8"
+default_vpc_cidr       = "172.31.0.0/16"
+default_route_table_id = "rtb-08bde1e5704ff0457"
 
 frontend_subnets       = [ "10.10.0.0/27", "10.10.0.32/27" ]
 backend_subnets        = [ "10.10.0.64/27", "10.10.0.96/27" ]
