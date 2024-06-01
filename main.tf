@@ -20,7 +20,7 @@ module "backend" {
   vault_token   = var.vault_token
 }*/
 
-/*module "mysql" {
+module "mysql" {
   source        = "./modules/app"
   instance_type = var.instance_type
   component     = "mysql"
@@ -29,7 +29,7 @@ module "backend" {
   vault_token   = var.vault_token
   subnets       = module.vpc.db_subnets
   vpc_id        = module.vpc.vpc_id
-}*/
+}
 
 module "vpc" {
   source                 = "./modules/vpc"

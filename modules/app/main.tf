@@ -1,7 +1,7 @@
-/*resource "aws_security_group" "main" {
+resource "aws_security_group" "main" {
   name   = "${var.component}-${var.env}-sg"
   vpc_id = var.vpc_id
-}*/
+}
 
 /*resource "aws_instance" "instance" {
   ami                    = data.aws_ami.ami.image_id
