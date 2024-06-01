@@ -38,7 +38,7 @@ resource "aws_instance" "instance" {
   }
 }
 
-/*resource "null_resource" "ansible" {
+resource "null_resource" "ansible" {
   connection {
     type     = "ssh"
     user     = jsondecode(data.vault_generic_secret.ssh.data_json).ansible_user
@@ -61,7 +61,7 @@ resource "aws_instance" "instance" {
       "rm -f ~/secrets.json ~/app.json"
     ]
   }
-}*/
+}
 
 resource "aws_route53_record" "record" {
   name    = "${var.component}-${var.env}"
