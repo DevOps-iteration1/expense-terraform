@@ -1,9 +1,9 @@
-resource "aws_security_group" "main" {
+/*resource "aws_security_group" "main" {
   name   = "${var.component}-${var.env}-sg"
   vpc_id = var.vpc_id
-}
+}*/
 
-resource "aws_instance" "instance" {
+/*resource "aws_instance" "instance" {
   ami                    = data.aws_ami.ami.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [data.aws_security_group.selected.id]
@@ -45,12 +45,12 @@ resource "null_resource" "ansible" {
       "rm -f ~/secrets.json ~/app.json"
     ]
   }
-}
+}*/
 
-resource "aws_route53_record" "record" {
+/*resource "aws_route53_record" "record" {
   name    = "${var.component}-${var.env}"
   type    = "A"
   zone_id = var.zone_id
   records = [aws_instance.instance.private_ip]
   ttl = 30
-}
+}*/
