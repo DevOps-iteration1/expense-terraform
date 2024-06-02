@@ -16,6 +16,7 @@ module "frontend" {
   bastion_nodes           = var.bastion_nodes
   prometheus_nodes        = var.prometheus_nodes
   server_app_port_sg_cidr = var.public_subnets
+  lb_app_port_sg_cidr     = ["0.0.0.0/0"]
 }
 
 module "backend" {
@@ -36,6 +37,7 @@ module "backend" {
   bastion_nodes           = var.bastion_nodes
   prometheus_nodes        = var.prometheus_nodes
   server_app_port_sg_cidr = concat(var.backend_subnets,var.frontend_subnets)
+  lb_app_port_sg_cidr     = var.frontend_subnets
 }
 
 module "mysql" {
