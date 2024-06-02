@@ -3,30 +3,30 @@ resource "aws_security_group" "main" {
   vpc_id = var.vpc_id
 
   ingress {
-    from_port = 22
-    to_port   = 22
-    protocol = "TCP"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
     cidr_blocks = var.bastion_nodes
   }
 
   ingress {
-    from_port = var.app_port
-    to_port   = var.app_port
-    protocol = "TCP"
+    from_port   = var.app_port
+    to_port     = var.app_port
+    protocol    = "TCP"
     cidr_blocks = var.server_app_port_sg_cidr
   }
 
   ingress {
-    from_port = 9100
-    to_port   = 9100
-    protocol = "TCP"
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "TCP"
     cidr_blocks = var.prometheus_nodes
   }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
@@ -102,16 +102,16 @@ resource "aws_security_group" "load-balancer" {
   vpc_id = var.vpc_id
 
   ingress {
-    from_port = var.app_port
-    to_port   = var.app_port
-    protocol = "TCP"
+    from_port   = var.app_port
+    to_port     = var.app_port
+    protocol    = "TCP"
     cidr_blocks = var.lb_app_port_sg_cidr
   }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
@@ -133,19 +133,19 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_lb_target_group" "main" {
-  count    = var.lb_needed ? 1 : 0
-  name     = "${var.component}-${var.env}-tg"
-  port     = var.app_port
-  protocol = "HTTP"
-  vpc_id   = var.vpc_id
+  count                = var.lb_needed ? 1 : 0
+  name                 = "${var.component}-${var.env}-tg"
+  port                 = var.app_port
+  protocol             = "HTTP"
+  vpc_id               = var.vpc_id
   deregistration_delay = 15
 
   health_check {
-    path = "/health"
-    timeout = 2
-    healthy_threshold = 2
-    interval = 5
-    port = var.app_port
+    path                = "/health"
+    timeout             = 2
+    healthy_threshold   = 2
+    interval            = 5
+    port                = var.app_port
     unhealthy_threshold = 2
   }
 }
