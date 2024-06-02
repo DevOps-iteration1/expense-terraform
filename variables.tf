@@ -14,3 +14,6 @@ variable "public_subnets" {}
 variable "lb_needed" {}
 variable "lb_type" {}
 variable "app_port" {}
+variable "bastion_nodes" {}
+variable "prometheus_nodes" {}
+variable "server_app_port_sg_cidr" {}
