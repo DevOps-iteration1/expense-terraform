@@ -15,3 +15,4 @@ public_subnets         = [ "10.10.0.192/27", "10.10.0.224/27" ]
 availability_zones     = [ "us-east-1a", "us-east-1b" ]
 bastion_nodes          = [ " 172.31.25.193/32" ]
 prometheus_nodes       = [""]
+certificate_arn        = ""
