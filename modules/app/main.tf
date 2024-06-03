@@ -16,11 +16,14 @@ resource "aws_security_group" "main" {
     cidr_blocks = var.server_app_port_sg_cidr
   }
 
-  ingress {
-    from_port   = 9100
-    to_port     = 9100
-    protocol    = "TCP"
-    cidr_blocks = var.prometheus_nodes
+  dynamic "ingress" {
+    for_each = var.lb_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "TCP"
+      cidr_blocks = var.lb_app_port_sg_cidr
+    }
   }
 
   egress {
